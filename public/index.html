@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simple Node App</title>
+  <script>
+    // JavaScript function to load pages without refreshing the browser
+    function loadPage(page) {
+      const contentDiv = document.getElementById('content');
+      const xhr = new XMLHttpRequest();
+      
+      // Send request to server to load the page
+      xhr.open('GET', `/${page}`, true);
+      
+      // When the response is received
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          contentDiv.innerHTML = xhr.responseText; // Update content without reloading
+          document.title = page.charAt(0).toUpperCase() + page.slice(1); // Update the title based on the page
+        }
+      };
+      
+      // Send the request
+      xhr.send();
+    }
+
+    // Load Home page by default when the page loads
+    window.onload = function() {
+      loadPage('');  // Empty string for home page
+    }
+  </script>
+</head>
+<body>
+  <nav>
+    <a href="#" onclick="loadPage('')">Home</a> | 
+    <a href="#" onclick="loadPage('about')">About</a> | 
+    <a href="#" onclick="loadPage('contact')">Contact</a>
+  </nav>
+
+  <div id="content">
+    <!-- Content of the page will load here -->
+  </div>
+</body>
+</html>
